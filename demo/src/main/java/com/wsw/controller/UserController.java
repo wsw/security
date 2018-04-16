@@ -3,17 +3,15 @@ package com.wsw.controller;
 import com.wsw.dto.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    @GetMapping
     public List<User> query(@RequestParam("username") String name,
                             @PageableDefault(page = 0, size = 2) Pageable pageable) {
 
@@ -26,5 +24,12 @@ public class UserController {
         users.add(new User());
         users.add(new User());
         return users;
+    }
+
+    @GetMapping("/{id:\\d+}")
+    public User getInfo(@PathVariable String id) {
+        User user = new User();
+        user.setUsername("wsw");
+        return user;
     }
 }
