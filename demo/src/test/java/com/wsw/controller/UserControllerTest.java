@@ -29,19 +29,31 @@ public class UserControllerTest {
     }
 
     @Test
-    public void whenQuerySuccess() throws Exception{
+    public void whenQuerySuccess() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/user")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .param("username", "wsw"))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(3));
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(3));
     }
 
     @Test
-    public void whenGetInfoSuccess() throws Exception{
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/1")
+    public void whenGetInfoSuccess() throws Exception {
+        String result = mockMvc.perform(MockMvcRequestBuilders.get("/user/1")
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.username").value("wsw"));
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.username").value("wsw"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(result);
+    }
+
+    @Test
+    public void whenCreateSuccess() throws Exception {
+        String content = "{\"username\":\"wsw\",\"password\":null}";
+        mockMvc.perform(MockMvcRequestBuilders.post("/user")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(content))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.username").value("wsw"));
     }
 }

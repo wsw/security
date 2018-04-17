@@ -3,8 +3,10 @@ package com.wsw.controller;
 import com.wsw.dto.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.*;
 
 @RestController
@@ -24,6 +26,18 @@ public class UserController {
         users.add(new User());
         users.add(new User());
         return users;
+    }
+
+    @PostMapping
+    public User create(@Valid @RequestBody User user, BindingResult error) {
+
+        if (error.hasErrors()) {
+            error.getAllErrors().stream().forEach(e -> {
+                System.out.println(e.getDefaultMessage());
+            });
+        }
+
+        return user;
     }
 
     @GetMapping("/{id:\\d+}")
