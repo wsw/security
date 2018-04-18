@@ -1,6 +1,7 @@
 package com.wsw.controller;
 
 import com.wsw.dto.User;
+import com.wsw.exception.UserNotFoundException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.BindingResult;
@@ -31,13 +32,15 @@ public class UserController {
     @PostMapping
     public User create(@Valid @RequestBody User user, BindingResult error) {
 
-        if (error.hasErrors()) {
-            error.getAllErrors().stream().forEach(e -> {
-                System.out.println(e.getDefaultMessage());
-            });
-        }
+        throw new UserNotFoundException("122212");
 
-        return user;
+//        if (error.hasErrors()) {
+//            error.getAllErrors().stream().forEach(e -> {
+//                System.out.println(e.getDefaultMessage());
+//            });
+//        }
+
+//        return user;
     }
 
     @GetMapping("/{id:\\d+}")
