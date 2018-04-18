@@ -26,7 +26,7 @@ public class AsyncController {
     private DeferredResultHolder deferredResultHolder;
 
     @RequestMapping("order")
-    public Callable<String> order() throws Exception{
+    public DeferredResult<String> order() throws Exception{
         logger.info("主线程开始");
 
         String orderNumber = RandomStringUtils.randomNumeric(8);
@@ -44,8 +44,8 @@ public class AsyncController {
 //                return "success";
 //            }
 //        };
-        Thread.sleep(1000);
+//        Thread.sleep(1000);
         logger.info("主线程结束");
-        return result;
+        return deferredResult;
     }
 }
